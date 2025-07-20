@@ -1,3 +1,4 @@
+VERSION_CODE="08-00-00-18-07-2025"
 from airflow.decorators import dag, task
 from airflow.models.baseoperator import chain
 from time import sleep
