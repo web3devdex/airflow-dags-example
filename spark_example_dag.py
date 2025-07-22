@@ -23,7 +23,7 @@ def spark_wordcount_dag():
             f"--master local[2] "
             f"/opt/airflow/dags/repo/wordcount.py "
             f"/opt/airflow/dags/repo/input.txt "
-            f"/opt/airflow/dags/repo/output.txt"
+            f"/opt/airflow/dags/repo/output"
         )
         print(f"Running: {bash_cmd}")
         subprocess.run(bash_cmd, shell=True, check=True)
