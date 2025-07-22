@@ -1,5 +1,6 @@
 from airflow.decorators import dag
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
+from airflow.operators.bash import BashOperator  
 from datetime import datetime
 
 @dag(
@@ -10,19 +11,12 @@ from datetime import datetime
     tags=["spark", "pyspark"],
 )
 def spark_wordcount_dag():
-    spark_wordcount = SparkSubmitOperator(
-        task_id="spark_wordcount_task",
-        application="/opt/airflow/dags/repo/wordcount.py",
-        conn_id="spark_default",
-        application_args=[
-        ],
-        executor_cores=2,
-        executor_memory="1g",
-        driver_memory="1g",
-        verbose=True,
+    run_spark = BashOperator(
+        task_id="run_spark_wordcount",
+        bash_command=(
+            "spark-submit --master local[*] /opt/airflow/dags/repo/wordcount.py "
+        ),
     )
-
-    spark_wordcount  # chỉ có 1 task
-
+    run_spark  # chỉ có 1 task
 # Gọi DAG
 spark_wordcount_dag()
