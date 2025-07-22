@@ -10,8 +10,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
-    input_path = sys.argv[1] if len(sys.argv) > 1 else "/opt/airflow/dags/repo/input.txt"
-    output_path = sys.argv[2] if len(sys.argv) > 2 else "/opt/airflow/dags/repo/output"
+    input_path = "/opt/airflow/dags/repo/input.txt"
+    output_path = "/opt/airflow/dags/repo/result.txt"
 
     spark = SparkSession.builder.appName("WordCount").getOrCreate()
 
@@ -24,7 +24,8 @@ if __name__ == "__main__":
               .map(lambda word: (word, 1))
               .reduceByKey(lambda a, b: a + b))
     print("printing count")
-    for word, cnt in counts.take(10):
+    for word, cnt in counts:
+        print(f"{word}: {cnt}")
         logger.info(f"{word}: {cnt}")
 
     # Lưu kết quả
