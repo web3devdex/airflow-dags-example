@@ -3,7 +3,7 @@ import sys
 
 if __name__ == "__main__":
     input_path = sys.argv[1] if len(sys.argv) > 1 else "/opt/airflow/dags/repo/input.txt"
-    output_path = sys.argv[2] if len(sys.argv) > 2 else "/opt/airflow/dags/repo/output"
+    output_path = sys.argv[2] if len(sys.argv) > 2 else "/opt/airflow/dags/repo/output.txt"
 
     spark = SparkSession.builder.appName("WordCount").getOrCreate()
 
