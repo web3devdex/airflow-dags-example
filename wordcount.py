@@ -2,8 +2,8 @@ from pyspark.sql import SparkSession
 import sys
 
 if __name__ == "__main__":
-    input_path = sys.argv[1] if len(sys.argv) > 1 else "/data/input.txt"
-    output_path = sys.argv[2] if len(sys.argv) > 2 else "/data/output"
+    input_path = sys.argv[1] if len(sys.argv) > 1 else "/opt/airflow/dags/repo/input.txt"
+    output_path = sys.argv[2] if len(sys.argv) > 2 else "/opt/airflow/dags/repo/output"
 
     spark = SparkSession.builder.appName("WordCount").getOrCreate()
 
