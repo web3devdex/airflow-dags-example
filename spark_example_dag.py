@@ -16,4 +16,19 @@ def spark_wordcount_dag():
     @task
     def run_spark_wordcount(execution_date: str = "{{ ds }}"):
         """
-        Gọi s
+        Gọi spark-submit với PySpark job
+        """
+        bash_cmd = (
+            f"spark-submit "
+            f"--master local[2] "
+            f"/opt/airflow/dags/repo/wordcount.py "
+            f"/opt/airflow/dags/repo/input.txt "
+            f"/opt/airflow/dags/repo/output_{execution_date}"
+        )
+        print(f"Running: {bash_cmd}")
+        subprocess.run(bash_cmd, shell=True, check=True)
+
+    # Gọi task
+    run_spark_wordcount()
+
+spark_wordcount_dag()
