@@ -20,9 +20,9 @@ with DAG(
         bash_command=(
             'spark-submit '
             '--master local[2] '
-            '/opt/airflow/wordcount.py '
-            '/opt/airflow/input.txt '
-            '/opt/airflow/output_{{ ds }}'
+            '/opt/airflow/dags/repo/wordcount.py '
+            '/opt/airflow/dags/repo/input.txt '
+            '/opt/airflow/dags/repo/output_{{ ds }}'
         )
     )
 
