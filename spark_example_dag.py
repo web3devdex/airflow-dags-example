@@ -18,7 +18,7 @@ def spark_wordcount_dag():
         """
         Gọi spark-submit với PySpark job
         """
-        bash_cmd = (f"spark-submit --master local[*] /opt/airflow/dags/repo/wordcount.py")
+        bash_cmd = (f"spark-submit /opt/airflow/dags/repo/wordcount.py")
         print(f"Running: {bash_cmd}")
         subprocess.run(bash_cmd, shell=True, check=True)
 
