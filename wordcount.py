@@ -24,9 +24,11 @@ if __name__ == "__main__":
               .map(lambda word: (word, 1))
               .reduceByKey(lambda a, b: a + b))
     print("printing count")
-    for word, cnt in counts:
-        print(f"{word}: {cnt}")
-        logger.info(f"{word}: {cnt}")
+    print("Số từ:", counts.count())
+
+    results = counts.collect()   # Trả về list các tuple (word, count)
+    for word, cnt in results:
+        print(word, cnt)
 
     # Lưu kết quả
     counts.saveAsTextFile(output_path)
