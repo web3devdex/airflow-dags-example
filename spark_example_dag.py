@@ -1,29 +1,19 @@
-from airflow import DAG
-from airflow.operators.bash import BashOperator
+VERSION_CODE = "08-00-00-22-07-2025"
+
+from airflow.decorators import dag, task
+from airflow.models.baseoperator import chain
 from datetime import datetime
+import subprocess
 
-default_args = {
-    'owner': 'airflow',
-    'start_date': datetime(2025, 1, 1),
-    'retries': 1,
-}
-
-with DAG(
-    dag_id='spark_wordcount_dag',
-    default_args=default_args,
-    schedule_interval='@daily',
+@dag(
+    dag_id="spark_wordcount_dag",
+    schedule="@daily",       # tương đương schedule_interval='@daily'
+    start_date=datetime(2025, 1, 1),
     catchup=False,
-) as dag:
-
-    run_spark_job = BashOperator(
-        task_id='run_spark_wordcount',
-        bash_command=(
-            'spark-submit '
-            '--master local[2] '
-            '/opt/airflow/dags/repo/wordcount.py '
-            '/opt/airflow/dags/repo/input.txt '
-            '/opt/airflow/dags/repo/output_{{ ds }}'
-        )
-    )
-
-    run_spark_job
+    tags=["spark", "pyspark"],
+)
+def spark_wordcount_dag():
+    @task
+    def run_spark_wordcount(execution_date: str = "{{ ds }}"):
+        """
+        Gọi s
